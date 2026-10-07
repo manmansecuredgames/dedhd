@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Home</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--text:#1d2433;--mute:#667089;--acc:#3a5bd9;--line:#dde2ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a33;--card:#1a2849;--text:#f1f5ff;--mute:#9fb0d6;--acc:#ffd166;--line:#2d3d66}}
+:root[data-theme="dark"]{--bg:#101a33;--card:#1a2849;--text:#f1f5ff;--mute:#9fb0d6;--acc:#ffd166;--line:#2d3d66}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-top:56px}
+h1,h2{margin:0 0 12px;letter-spacing:-.02em}
+input,button,textarea{font:inherit}
+input,textarea{padding:10px 12px;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:10px;min-width:0}
+button{padding:10px 14px;border:0;border-radius:10px;background:var(--acc);color:#111;font-weight:600;cursor:pointer}
+button.g{background:var(--card);color:var(--text);border:1px solid var(--line)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hide{display:none!important}
+#eye{position:fixed;top:8px;left:50%;transform:translateX(-50%);width:64px;height:36px;border-radius:50%;background:#fff;border:2px solid #222;z-index:99;cursor:pointer;overflow:hidden}
+#pup{position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#111}
+#gate{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px}
+#gate input{width:100%;max-width:220px;text-align:center;font-size:1.1rem;opacity:.6}
+#gate input:focus{opacity:1}
+nav{display:flex;gap:8px;padding:0 16px 12px;flex-wrap:wrap;justify-content:center}
+nav button{background:var(--card);color:var(--text);border:1px solid var(--line)}
+nav button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.pg{max-width:680px;margin:0 auto;padding:8px 16px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row input{flex:1 1 140px}
+ul.s{list-style:none;padding:0;margin:0 0 16px}
+ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.msgs{height:50vh;overflow-y:auto;margin-bottom:10px}
+.m{margin-bottom:8px}.m b{color:var(--acc)}
+.me{text-align:right}.me .b{background:var(--acc);color:#111}
+.b{display:inline-block;max-width:85%;padding:8px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);white-space:pre-wrap;text-align:left}
+.note{color:var(--mute);font-size:.9rem}
+#mk{background:#fff;color:#222;font-family:Georgia,"Times New Roman",serif;min-height:100vh;padding-top:56px;position:absolute;top:0;left:0;right:0}
+#mk header{background:#c8102e;color:#fff;padding:14px 20px;font:700 1.4rem Arial,sans-serif}
+#mk .w{max-width:760px;margin:0 auto;padding:16px}
+#mk .r{border-bottom:1px solid #ddd;padding:16px 0}
+#mk .r h3{margin:0;font:700 1.15rem Arial,sans-serif;color:#0073bb}
+#mk .st{color:#e00707;letter-spacing:2px}
+#mk p{margin:6px 0 0}#mk small{color:#666;font-family:Arial,sans-serif}
+</style>
+</head>
+<body>
+<div id="eye" role="button" aria-label="Toggle view"><div id="pup"></div></div>
+
+<div id="gate"><input id="f" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Input" autofocus></div>
+
+<div id="app" class="hide">
+  <nav id="nav">
+    <button data-p="home" class="on">Home</button><button data-p="games">Games</button><button data-p="search">Search</button><button data-p="links">Links</button>
+  </nav>
+
+  <section id="home" class="pg">
+    <h1>Home</h1>
+    <div class="card" id="say" style="font-size:1.3rem;padding:22px;margin-bottom:12px"></div>
+    <button id="shuf" class="g">Another</button>
+  </section>
+
+  <section id="games" class="pg hide">
+    <h1>Games</h1>
+    <div class="card">
+      <div class="row"><input id="gn" placeholder="Name"><input id="gl" placeholder="Link" inputmode="url"></div>
+      <div class="row" style="margin-top:8px"><input id="gt" list="gd" placeholder="Category (optional)"><datalist id="gd"></datalist></div>
+      <div class="row" style="margin-top:8px"><button id="gs">Add game</button><button id="gp" class="g">Paste</button><button id="gc" class="g hide">Cancel</button></div>
+    </div>
+    <div class="row" id="gf" style="margin-bottom:10px"></div>
+    <div id="gx"></div>
+  </section>
+
+  <section id="search" class="pg hide">
+    <h1>Search</h1>
+    <div class="row"><input id="sq" placeholder="Paste or type a link" inputmode="url" autocapitalize="off"><button id="sg">Go</button></div>
+    <p class="note">Opens in a new about:blank tab. Some sites refuse to load inside another page.</p>
+  </section>
+
+  <section id="links" class="pg hide">
+    <h1>Links</h1>
+    <div class="card">
+      <div class="row"><input id="kn" placeholder="Name (optional)"><input id="kl" placeholder="Link" inputmode="url"></div>
+      <div class="row" style="margin-top:8px"><input id="kt" list="kd" placeholder="Category (optional)"><datalist id="kd"></datalist></div>
+      <div class="row" style="margin-top:8px"><button id="ks">Add link</button><button id="kp" class="g">Paste</button><button id="kc" class="g hide">Cancel</button></div>
+    </div>
+    <div class="row" id="kf" style="margin-bottom:10px"></div>
+    <div id="kx"></div>
+  </section>
+
+</div>
+
+<div id="mk" class="hide">
+  <header>FreshFare Market Reviews</header>
+  <div class="w" id="mkl"></div>
+</div>
+
+<script>
+/* =====================================================
+   EDIT YOUR GAMES AND LINKS HERE
+   One per line. Two ways to write a line:
+       Name | Link
+       Category | Name | Link
+   Lines starting with # are ignored. Add as many as you want.
+   ===================================================== */
+var GAMES = `
+# Category | Name | Link
+Action | Example Game | https://example.com
+Puzzle | Another Game | https://example.org
+`;
+
+var LINKS = `
+# Category | Name | Link
+School | Example Link | https://example.com
+Fun | Another Link | https://example.org
+`;
+/* ===================================================== */
+
+var CODE="1";
+var SELF=location.href.split("#")[0];      // the site itself opens in the about:blank tab
+var AFTER="https://www.google.com";        // where the original tab goes afterward
+var SAY=["i beef with hocus pocus","lil k got tuberculosis","hello kitty bape got a rip lets get some tape","cooking chicken, in the kitchen","balenciagas on the f-eet","i ran, to thailand",
+"i cant pay rent, i pull up peter parker","i went on a date with personality traits","we was eating lobsta now i stack up guap-a","you got a car? i said i got nada"];
+var $=function(i){return document.getElementById(i)};
+var unlocked=false;
+
+function ls(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem(k))}localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function cap(n){var C=window.claude;return C&&C.use?C.use(n).catch(function(){return null}):Promise.resolve(null)}
+
+/* about:blank */
+function openBlank(url){
+  var w=window.open("about:blank","_blank");
+  if(!w)return false;
+  var d=w.document;d.title="Home";
+  d.body.style.cssText="margin:0;height:100vh;overflow:hidden";
+  var fr=d.createElement("iframe");
+  fr.name="__e";fr.src=url;
+  fr.style.cssText="border:0;width:100%;height:100%";
+  fr.setAttribute("allowfullscreen","");
+  d.body.appendChild(fr);
+  return true;
+}
+function embedded(){
+  if(window.top===window)return false;
+  if(window.name==="__e")return true;
+  try{return window.top.location.href==="about:blank"}catch(e){return false}
+}
+
+/* gate */
+function showSite(){unlocked=true;$("gate").classList.add("hide");$("app").classList.remove("hide");pick()}
+$("f").addEventListener("keydown",function(e){
+  if(e.key!=="Enter")return;
+  if(this.value!==CODE){this.value="";return}
+  if(openBlank(SELF)){location.replace(AFTER)}else{showSite()}
+});
+
+/* nav */
+function go(p){
+  ["home","games","search","links"].forEach(function(x){$(x).classList.toggle("hide",x!==p)});
+  [].forEach.call($("nav").children,function(b){b.classList.toggle("on",b.dataset.p===p)});
+}
+$("nav").addEventListener("click",function(e){if(e.target.dataset.p)go(e.target.dataset.p)});
+
+/* home: one random line at a time, no repeats until all are used */
+var deck=[];
+function pick(){
+  if(!deck.length){
+    deck=SAY.slice();
+    for(var i=deck.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=deck[i];deck[i]=deck[j];deck[j]=t}
+  }
+  $("say").textContent=deck.pop();
+}
+$("shuf").onclick=pick;
+
+function norm(u){return /^[a-z]+:\/\//i.test(u)?u:"https://"+u}
+function openAny(u){if(!openBlank(u))window.open(u,"_blank")}
+function copyText(t,btn){
+  var old=btn.textContent;
+  function done(){btn.textContent="Copied";setTimeout(function(){btn.textContent=old},1200)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(function(){})}
+  else{var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");done()}catch(e){}a.remove()}
+}
+
+/* saved lists (games, links): kept in this browser until deleted */
+function parse(txt){
+  var out=[];
+  txt.split("\n").forEach(function(line){
+    line=line.trim();if(!line||line[0]==="#")return;
+    var p=line.split("|").map(function(x){return x.trim()});
+    if(p.length>=3)out.push({c:p[0],n:p[1],l:p.slice(2).join("|").trim(),p:1});
+    else if(p.length===2&&p[1])out.push({n:p[0],l:p[1],p:1});
+  });
+  return out;
+}
+function mkList(p,key,lab,txt){
+  var pre=parse(txt),items=ls(key)||[],ed=-1,flt="",N=$(p+"n"),L=$(p+"l"),T=$(p+"t"),S=$(p+"s"),C=$(p+"c"),X=$(p+"x"),F=$(p+"f"),D=$(p+"d");
+  function cat(g){return g.c||"Other"}
+  function reset(){ed=-1;N.value="";L.value="";T.value="";S.textContent=lab;C.classList.add("hide")}
+  function chips(cs){
+    F.innerHTML="";D.innerHTML="";
+    cs.forEach(function(c){var o=document.createElement("option");o.value=c;D.appendChild(o)});
+    if(cs.length<2)return;
+    ["All"].concat(cs).forEach(function(c){
+      var b=document.createElement("button");b.textContent=c;
+      b.className=(c==="All"?!flt:flt===c)?"":"g";
+      b.onclick=function(){flt=c==="All"?"":c;draw()};F.appendChild(b);
+    });
+  }
+  function card(g,i){
+    var c=document.createElement("div");c.className="card";
+    var t=document.createElement("b");t.textContent=g.n;
+    var u=document.createElement("div");u.className="note";u.style.wordBreak="break-all";u.textContent=g.l;
+    var r=document.createElement("div");r.className="row";r.style.marginTop="8px";
+    var acts=[["Open in about:blank",function(){openAny(norm(g.l))}],
+     ["Copy",function(e){copyText(g.l,e.target)}]];
+    if(!g.p)acts.push(["Edit",function(){ed=i;N.value=g.n;L.value=g.l;T.value=g.c||"";S.textContent="Save";C.classList.remove("hide");N.focus()}],
+     ["Delete",function(){items.splice(i,1);ls(key,items);draw()}]);
+    acts.forEach(function(x,k){
+      var b=document.createElement("button");b.textContent=x[0];if(k)b.className="g";b.onclick=x[1];r.appendChild(b)});
+    c.append(t,u,r);return c;
+  }
+  function draw(){
+    var all=pre.concat(items),cs=[];all.forEach(function(g){if(cs.indexOf(cat(g))<0)cs.push(cat(g))});
+    if(flt&&cs.indexOf(flt)<0)flt="";
+    chips(cs);X.innerHTML="";
+    if(!all.length){X.innerHTML='<p class="note">Nothing saved yet.</p>';return}
+    cs.forEach(function(c){
+      if(flt&&flt!==c)return;
+      var h=document.createElement("h2");h.textContent=c;h.style.fontSize="1.05rem";h.style.margin="14px 0 8px";X.appendChild(h);
+      all.forEach(function(g,i){if(cat(g)===c)X.appendChild(card(g,i-pre.length))});
+    });
+  }
+  S.onclick=function(){
+    var l=L.value.trim(),n=N.value.trim(),c=T.value.trim();if(!l)return;
+    if(!n){try{n=new URL(norm(l)).hostname}catch(e){n=l}}
+    var it={n:n,l:l};if(c)it.c=c;
+    if(ed>-1)items[ed]=it;else items.push(it);
+    ls(key,items);reset();draw();
+  };
+  C.onclick=reset;
+  $(p+"p").onclick=function(){
+    if(navigator.clipboard&&navigator.clipboard.readText)navigator.clipboard.readText().then(function(t){L.value=t.trim()}).catch(function(){});
+  };
+  draw();
+}
+mkList("g","games","Add game",GAMES);
+mkList("k","links","Add link",LINKS);
+
+/* search: opens any link in about:blank */
+function goSearch(){
+  var q=$("sq").value.trim();if(!q)return;
+  var isLink=/^[a-z]+:\/\//i.test(q)||/^[\w-]+(\.[\w-]+)+([\/?#:]|$)/.test(q);
+  openAny(isLink?norm(q):"https://www.google.com/search?q="+encodeURIComponent(q));
+}
+$("sg").onclick=goSearch;
+$("sq").addEventListener("keydown",function(e){if(e.key==="Enter")goSearch()});
+
+/* press 5: market reviews view */
+var M=[["Harbor Street Farmers Market",4.6,812,"Great produce and the cheese stall is worth the trip. Arrive before 9 to beat the crowd."],
+["Eastgate Public Market",4.2,1534,"Lots of variety, a bit pricey. The fish counter was the freshest I've found in the city."],
+["Green Valley Co-op",4.4,367,"Friendly staff, solid bulk section. Parking is tight on weekends."],
+["Tran's Asian Market",4.7,942,"Best selection of fresh herbs and noodles nearby. Cash is faster at checkout."],
+["Little Lisbon Grocery",3.9,203,"Pastries are excellent. Shelves can run low by the afternoon."]];
+(function(){
+  var h="";M.forEach(function(m){
+    var f=Math.round(m[1]);
+    h+='<div class="r"><h3>'+m[0]+'</h3><div><span class="st">'+"\u2605".repeat(f)+"\u2606".repeat(5-f)+'</span> <small>'+m[1]+' ('+m[2]+' reviews)</small></div><p>'+m[3]+'</p></div>';
+  });
+  $("mkl").innerHTML=h;
+})();
+document.addEventListener("keydown",function(e){
+  if(!unlocked||e.key!=="5")return;
+  var t=document.activeElement&&document.activeElement.tagName;
+  if(t==="INPUT"||t==="TEXTAREA")return;
+  toggleMk();
+});
+function toggleMk(){
+  if(!unlocked)return;
+  var on=$("mk").classList.toggle("hide")===false;
+  $("app").classList.toggle("hide",on);
+  window.scrollTo(0,0);
+}
+$("eye").addEventListener("click",toggleMk);
+
+/* eye */
+var pup=$("pup");
+function look(x,y){
+  var r=$("eye").getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  var dx=x-cx,dy=y-cy,d=Math.hypot(dx,dy)||1,k=Math.min(d,1)*1;
+  pup.style.transform="translate("+(dx/d*16*k)+"px,"+(dy/d*7*k)+"px)";
+}
+window.addEventListener("pointermove",function(e){look(e.clientX,e.clientY)});
+window.addEventListener("touchmove",function(e){var t=e.touches[0];if(t)look(t.clientX,t.clientY)},{passive:true});
+if(embedded())showSite();
+</script>
+</body>
+</html>
