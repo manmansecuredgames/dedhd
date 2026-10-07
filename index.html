@@ -121,7 +121,7 @@ var CODE="1";
 var SELF=location.href.split("#")[0];      // the site itself opens in the about:blank tab
 var AFTER="https://www.google.com";        // where the original tab goes afterward
 var SAY=["i beef with hocus pocus","lil k got tuberculosis","hello kitty bape got a rip lets get some tape","cooking chicken, in the kitchen","balenciagas on the f-eet","i ran, to thailand",
-"i cant pay rent, i pull up peter parker","i went on a date with personality traits","we was eating lobsta now i stack up guap-a","you got a car? i said i got nada"];
+"i cant pay rent, i pull up peter parker","i went on a date with personality traits","we was eating lobsta now i stack up guap-a","you got a car? i said i got nada","cus im a fan","pull in the sky like a bird"];
 var $=function(i){return document.getElementById(i)};
 var unlocked=false;
 
@@ -251,7 +251,7 @@ mkList("k","links","Add link",LINKS);
 function goSearch(){
   var q=$("sq").value.trim();if(!q)return;
   var isLink=/^[a-z]+:\/\//i.test(q)||/^[\w-]+(\.[\w-]+)+([\/?#:]|$)/.test(q);
-  openAny(isLink?norm(q):"https://www.google.com/search?q="+encodeURIComponent(q));
+  openAny(isLink?norm(q):"https://www.cmsk12.org/"+encodeURIComponent(q));
 }
 $("sg").onclick=goSearch;
 $("sq").addEventListener("keydown",function(e){if(e.key==="Enter")goSearch()});
