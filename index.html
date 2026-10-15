@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Home</title>
+<title>E</title>
 <style>
 :root{--bg:#f4f6fb;--card:#fff;--text:#1d2433;--mute:#667089;--acc:#3a5bd9;--line:#dde2ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a33;--card:#1a2849;--text:#f1f5ff;--mute:#9fb0d6;--acc:#ffd166;--line:#2d3d66}}
@@ -43,11 +43,21 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
 #mk .r h3{margin:0;font:700 1.15rem Arial,sans-serif;color:#0073bb}
 #mk .st{color:#e00707;letter-spacing:2px}
 #mk p{margin:6px 0 0}#mk small{color:#666;font-family:Arial,sans-serif}
-#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--acc);color:#111;padding:10px 18px;border-radius:999px;font-weight:700;z-index:98;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+#toast{position:fixed;left:50%;bottom:calc(72px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--acc);color:#111;padding:10px 18px;border-radius:999px;font-weight:700;z-index:98;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .av{width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px;background:var(--line)}
 .ban{height:90px;border-radius:10px;background:var(--line) center/cover}
 .pl iframe,.pl video{width:100%;border:0;border-radius:12px;aspect-ratio:16/9;background:#000}
 .pl audio{width:100%}
+#bn{position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--acc);color:#111;text-align:center;font-weight:700;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 14px rgba(0,0,0,.25)}
+#home{padding-bottom:90px}
+.sr{display:flex;gap:12px;align-items:center}
+.sr img{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--line);flex:none}
+.sr .t{min-width:0;flex:1}
+.sr .t b,.sr .t div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr audio{width:100%;margin-top:6px}
+.tb{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.tb button{display:flex;gap:8px;align-items:center;justify-content:center;background:var(--card);color:var(--text);border:1px solid var(--line)}
+.tb button img{width:18px;height:18px}
 </style>
 </head>
 <body>
@@ -57,7 +67,7 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
 
 <div id="app" class="hide">
   <nav id="nav">
-    <button data-p="home" class="on">Home</button><button data-p="games">Games</button><button data-p="search">Search</button><button data-p="links">Links</button><button data-p="chat">Chat</button><button data-p="music">Music</button><button data-p="watch">Watch</button>
+    <button data-p="home" class="on">Home</button><button data-p="games">Games</button><button data-p="search">Search</button><button data-p="links">Links</button><button data-p="chat">Chat</button><button data-p="music">Music</button><button data-p="watch">Watch</button><button data-p="tab">Tab</button>
   </nav>
 
   <section id="home" class="pg">
@@ -73,6 +83,7 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
       <div class="row" style="margin-top:8px"><input id="gt" list="gd" placeholder="Category (optional)"><datalist id="gd"></datalist></div>
       <div class="row" style="margin-top:8px"><button id="gs">Add game</button><button id="gp" class="g">Paste</button><button id="gc" class="g hide">Cancel</button></div>
     </div>
+    <div class="row" style="margin-bottom:10px"><input id="gq" type="search" placeholder="Search games" autocomplete="off" aria-label="Search games"></div>
     <div class="row" id="gf" style="margin-bottom:10px"></div>
     <div id="gx"></div>
   </section>
@@ -131,9 +142,9 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
 
   <section id="music" class="pg hide">
     <h1>Music</h1>
-    <div class="row"><input id="mi" placeholder="Paste a SoundCloud, Spotify or YouTube link" inputmode="url" autocapitalize="off"><button id="mg">Play</button><button id="ms" class="g">Search SoundCloud</button></div>
-    <div class="pl" id="mp" style="margin-top:12px"></div>
-    <p class="note">Type a name and tap Search, open a result, then paste its link here. Spotify links only play previews unless you are logged in to Spotify.</p>
+    <div class="row"><input id="mq" type="search" placeholder="Search any song or artist" autocomplete="off" aria-label="Search music"><button id="mgo">Search</button></div>
+    <div id="mr" style="margin-top:12px"></div>
+    <p class="note">Plays free 30-second previews from Apple Music.</p>
   </section>
 
   <section id="watch" class="pg hide">
@@ -143,6 +154,13 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
     <p class="note">Type a name and tap Search, open a result, then paste its link here. Videos that block embedding will not play.</p>
   </section>
 
+  <section id="tab" class="pg hide">
+    <h1>Tab</h1>
+    <p class="note">Pick one to change this tab's name and icon.</p>
+    <div class="tb" id="tbb"></div>
+  </section>
+
+  <div id="bn">kamarion - new album out now</div>
 </div>
 
 <div id="mk" class="hide">
@@ -181,6 +199,7 @@ Gemini | Gemini | https://howdyne.lovable.app/
 var CODE="1";
 var SELF=location.href.split("#")[0];      // the site itself opens in the about:blank tab
 var AFTER="https://www.cmsk12.org/";        // where the original tab goes afterward
+var CL="https://myapps.classlink.com/home"; // where pressing 5 sends you
 var SAY=["i beef with hocus pocus","lil k got tuberculosis","hello kitty bape got a rip lets get some tape","cooking chicken, in the kitchen","balenciagas on the f-eet","i ran, to thailand",
 "i cant pay rent, i pull up peter parker","i went on a date with personality traits","we was eating lobsta now i stack up guap-a","you got a car? i said i got nada","cus im a fan","pull in the sky like a bird"];
 var $=function(i){return document.getElementById(i)};
@@ -193,7 +212,7 @@ function cap(n){var C=window.claude;return C&&C.use?C.use(n).catch(function(){re
 function openBlank(url){
   var w=window.open("about:blank","_blank");
   if(!w)return false;
-  var d=w.document;d.title="Home";
+  var d=w.document;d.title="E";
   d.body.style.cssText="margin:0;height:100vh;overflow:hidden";
   var fr=d.createElement("iframe");
   fr.name="__e";fr.src=url;
@@ -209,7 +228,7 @@ function embedded(){
 }
 
 /* gate */
-function showSite(){unlocked=true;$("gate").classList.add("hide");$("app").classList.remove("hide");pick();toast()}
+function showSite(){unlocked=true;$("gate").classList.add("hide");$("app").classList.remove("hide");pick();toast();applyTab(ls("tabi"))}
 $("f").addEventListener("keydown",function(e){
   if(e.key!=="Enter")return;
   if(this.value!==CODE){this.value="";return}
@@ -218,8 +237,9 @@ $("f").addEventListener("keydown",function(e){
 
 /* nav */
 function go(p){
-  ["home","games","search","links","chat","music","watch"].forEach(function(x){$(x).classList.toggle("hide",x!==p)});
+  ["home","games","search","links","chat","music","watch","tab"].forEach(function(x){$(x).classList.toggle("hide",x!==p)});
   [].forEach.call($("nav").children,function(b){b.classList.toggle("on",b.dataset.p===p)});
+  $("bn").classList.toggle("hide",p!=="home");
 }
 $("nav").addEventListener("click",function(e){if(e.target.dataset.p)go(e.target.dataset.p)});
 
@@ -255,7 +275,7 @@ function parse(txt){
   return out;
 }
 function mkList(p,key,lab,txt){
-  var pre=parse(txt),items=ls(key)||[],ed=-1,flt="",N=$(p+"n"),L=$(p+"l"),T=$(p+"t"),S=$(p+"s"),C=$(p+"c"),X=$(p+"x"),F=$(p+"f"),D=$(p+"d");
+  var pre=parse(txt),items=ls(key)||[],ed=-1,flt="",N=$(p+"n"),L=$(p+"l"),T=$(p+"t"),S=$(p+"s"),C=$(p+"c"),X=$(p+"x"),F=$(p+"f"),D=$(p+"d"),Q=$(p+"q");
   function cat(g){return g.c||"Other"}
   function reset(){ed=-1;N.value="";L.value="";T.value="";S.textContent=lab;C.classList.add("hide")}
   function chips(cs){
@@ -283,14 +303,19 @@ function mkList(p,key,lab,txt){
   }
   function draw(){
     var all=pre.concat(items),cs=[];all.forEach(function(g){if(cs.indexOf(cat(g))<0)cs.push(cat(g))});
+    var q=Q?Q.value.trim().toLowerCase():"";
+    function hit(g){return !q||(g.n+" "+(g.c||"")).toLowerCase().indexOf(q)>-1}
     if(flt&&cs.indexOf(flt)<0)flt="";
     chips(cs);X.innerHTML="";
     if(!all.length){X.innerHTML='<p class="note">Nothing saved yet.</p>';return}
+    var shown=0;
     cs.forEach(function(c){
       if(flt&&flt!==c)return;
+      if(!all.some(function(g){return cat(g)===c&&hit(g)}))return;
       var h=document.createElement("h2");h.textContent=c;h.style.fontSize="1.05rem";h.style.margin="14px 0 8px";X.appendChild(h);
-      all.forEach(function(g,i){if(cat(g)===c)X.appendChild(card(g,i-pre.length))});
+      all.forEach(function(g,i){if(cat(g)===c&&hit(g)){X.appendChild(card(g,i-pre.length));shown++}});
     });
+    if(!shown)X.innerHTML='<p class="note">No matches.</p>';
   }
   S.onclick=function(){
     var l=L.value.trim(),n=N.value.trim(),c=T.value.trim();if(!l)return;
@@ -300,6 +325,7 @@ function mkList(p,key,lab,txt){
     ls(key,items);reset();draw();
   };
   C.onclick=reset;
+  if(Q)Q.addEventListener("input",draw);
   $(p+"p").onclick=function(){
     if(navigator.clipboard&&navigator.clipboard.readText)navigator.clipboard.readText().then(function(t){L.value=t.trim()}).catch(function(){});
   };
@@ -317,7 +343,7 @@ function goSearch(){
 $("sg").onclick=goSearch;
 $("sq").addEventListener("keydown",function(e){if(e.key==="Enter")goSearch()});
 
-/* press 5: market reviews view */
+/* press 5: go to ClassLink */
 var M=[["Harbor Street Farmers Market",4.6,812,"Great produce and the cheese stall is worth the trip. Arrive before 9 to beat the crowd."],
 ["Eastgate Public Market",4.2,1534,"Lots of variety, a bit pricey. The fish counter was the freshest I've found in the city."],
 ["Green Valley Co-op",4.4,367,"Friendly staff, solid bulk section. Parking is tight on weekends."],
@@ -338,13 +364,11 @@ document.addEventListener("keydown",function(e){
 });
 function toggleMk(){
   if(!unlocked)return;
-  var on=$("mk").classList.toggle("hide")===false;
-  $("app").classList.toggle("hide",on);
-  window.scrollTo(0,0);
+  try{window.top.location.href=CL}catch(e){location.href=CL}
 }
 $("eye").addEventListener("click",toggleMk);
 
-/* media: music and watch pages */
+/* media: watch page */
 function embedEl(u){
   var m,e;
   function fr(src,h){e=document.createElement("iframe");e.src=src;e.allow="autoplay; fullscreen; encrypted-media; picture-in-picture";e.setAttribute("allowfullscreen","");if(h)e.style.cssText="aspect-ratio:auto;height:"+h+"px";return e}
@@ -368,8 +392,75 @@ function mkPlayer(p,searchBase){
   $(p+"i").addEventListener("keydown",function(e){if(e.key==="Enter")play()});
   $(p+"s").onclick=function(){window.open(searchBase+encodeURIComponent($(p+"i").value.trim()),"_blank")};
 }
-mkPlayer("m","https://soundcloud.com/search?q=");
 mkPlayer("v","https://www.youtube.com/results?search_query=");
+
+/* music: search Apple's iTunes catalog, play the free 30-second previews only */
+function musicSearch(){
+  var q=$("mq").value.trim(),box=$("mr");if(!q)return;
+  box.innerHTML='<p class="note">Searching...</p>';
+  fetch("https://itunes.apple.com/search?media=music&entity=song&limit=25&term="+encodeURIComponent(q))
+    .then(function(r){if(!r.ok)throw 0;return r.json()})
+    .then(function(d){
+      box.innerHTML="";
+      var res=(d.results||[]).filter(function(x){return x.previewUrl});
+      if(!res.length){box.innerHTML='<p class="note">No results.</p>';return}
+      res.forEach(function(x){
+        var c=document.createElement("div");c.className="card";
+        var row=document.createElement("div");row.className="sr";
+        var im=document.createElement("img");im.alt="";im.src=x.artworkUrl100||"";
+        var t=document.createElement("div");t.className="t";
+        var n=document.createElement("b");n.textContent=x.trackName||"";
+        var a=document.createElement("div");a.className="note";a.textContent=(x.artistName||"")+(x.collectionName?" \u2022 "+x.collectionName:"");
+        var au=document.createElement("audio");au.controls=true;au.preload="none";au.src=x.previewUrl;
+        t.append(n,a,au);row.append(im,t);c.appendChild(row);box.appendChild(c);
+      });
+    })
+    .catch(function(){box.innerHTML='<p class="note">Search failed. The music service may be blocked on this network.</p>'});
+}
+$("mgo").onclick=musicSearch;
+$("mq").addEventListener("keydown",function(e){if(e.key==="Enter")musicSearch()});
+/* only one preview plays at a time */
+document.addEventListener("play",function(e){
+  if(e.target.tagName!=="AUDIO")return;
+  [].forEach.call($("mr").querySelectorAll("audio"),function(a){if(a!==e.target)a.pause()});
+},true);
+
+/* tab page: change this tab's name and icon */
+var ICO=function(d){return "https://www.google.com/s2/favicons?sz=64&domain="+d};
+var TABS=[
+ ["E","data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%233a5bd9'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='Arial'%3EE%3C/text%3E%3C/svg%3E","Reset (E)"],
+ ["Dashboard",ICO("instructure.com"),"Canvas Dashboard"],
+ ["LaunchPad",ICO("classlink.com"),"CMS LaunchPad"],
+ ["My Drive - Google Drive",ICO("drive.google.com"),"Google Drive"],
+ ["Inbox - Gmail",ICO("mail.google.com"),"Google Gmail"],
+ ["Google Docs",ICO("docs.google.com"),"Google Docs"]
+];
+function setTab(t,icon){
+  var docs=[document];
+  try{if(window.top!==window)docs.push(window.top.document)}catch(e){}
+  docs.forEach(function(d){
+    try{
+      d.title=t;
+      var l=d.querySelector("link[rel~='icon']");
+      if(!l){l=d.createElement("link");l.rel="icon";d.head.appendChild(l)}
+      l.href=icon;
+    }catch(e){}
+  });
+}
+function applyTab(i){
+  if(i===null||i===undefined||!TABS[i])return;
+  setTab(TABS[i][0],TABS[i][1]);
+}
+(function(){
+  var box=$("tbb");
+  TABS.forEach(function(t,i){
+    var b=document.createElement("button");
+    if(i){var im=document.createElement("img");im.alt="";im.src=t[1];b.appendChild(im)}
+    b.appendChild(document.createTextNode(t[2]));
+    b.onclick=function(){ls("tabi",i);applyTab(i)};
+    box.appendChild(b);
+  });
+})();
 
 /* chat: shared through a free public relay (ntfy.sh). Logins are not real security. */
 var KEY="hm-4q8z1v";                       // change to your own random text so the room is yours
@@ -496,3 +587,5 @@ if(embedded())showSite();
 </script>
 </body>
 </html>
+
+
