@@ -160,6 +160,23 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
     <div class="tb" id="tbb"></div>
   </section>
 
+  <!-- ADDED: password-locked page -->
+  <section id="vault" class="pg hide">
+    <h1>Vault</h1>
+    <div id="vlock" class="card">
+      <div class="row"><input id="vpw" type="password" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password"><button id="vgo">Unlock</button></div>
+      <p class="note hide" id="vmsg"></p>
+    </div>
+    <div id="vopen" class="hide">
+      <div class="card">
+        <p class="note">Downloads this site's HTML, read fresh from the live code every time you tap.</p>
+        <button id="vdl">Download website HTML</button>
+        <p class="note" id="vst"></p>
+      </div>
+      <button id="vre" class="g">Lock</button>
+    </div>
+  </section>
+
   <div id="bn">kamarion - new album out now</div>
 </div>
 
@@ -609,7 +626,60 @@ window.addEventListener("pointermove",function(e){look(e.clientX,e.clientY)});
 window.addEventListener("touchmove",function(e){var t=e.touches[0];if(t)look(t.clientX,t.clientY)},{passive:true});
 if(embedded())showSite();
 </script>
+
+<!-- ADDED: Vault page (password lock + live HTML download). Nothing above this line was changed except the new <section id="vault"> block. -->
+<script>
+(function(){
+  var HASH="ac4c6fb67219260c2b6fc896c7778ab781b092494fcc526aeab8433808dd760a"; // SHA-256 of the password
+
+  /* nav button + hook into the existing go() without editing it */
+  var nb=document.createElement("button");nb.dataset.p="vault";nb.textContent="Vault";$("nav").appendChild(nb);
+  var origGo=go;
+  go=function(p){
+    origGo(p);
+    $("vault").classList.toggle("hide",p!=="vault");
+    if(p!=="vault")lock();
+  };
+
+  function lock(){
+    $("vopen").classList.add("hide");$("vlock").classList.remove("hide");
+    $("vpw").value="";$("vmsg").classList.add("hide");$("vst").textContent="";
+  }
+  function sha(s){
+    return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
+      return [].map.call(new Uint8Array(b),function(x){return ("0"+x.toString(16)).slice(-2)}).join("");
+    });
+  }
+  function msg(t){var m=$("vmsg");m.textContent=t;m.classList.remove("hide")}
+  function tryUnlock(){
+    var v=$("vpw").value;if(!v)return;
+    if(!(window.crypto&&crypto.subtle)){msg("Needs a secure (https) connection to check the password.");return}
+    sha(v).then(function(h){
+      $("vpw").value="";
+      if(h===HASH){$("vlock").classList.add("hide");$("vopen").classList.remove("hide");$("vmsg").classList.add("hide")}
+      else msg("Wrong password.");
+    });
+  }
+  $("vgo").onclick=tryUnlock;
+  $("vpw").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock()});
+  $("vre").onclick=lock;
+
+  /* download: reads the page's own source at click time, so it is always the current real code */
+  function source(){
+    var u=location.href.split("#")[0];
+    return fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()})
+      .catch(function(){return "<!DOCTYPE html>\n"+document.documentElement.outerHTML});
+  }
+  $("vdl").onclick=function(){
+    $("vst").textContent="Preparing...";
+    source().then(function(t){
+      var a=document.createElement("a"),url=URL.createObjectURL(new Blob([t],{type:"text/html"}));
+      a.href=url;a.download="website.html";document.body.appendChild(a);a.click();a.remove();
+      setTimeout(function(){URL.revokeObjectURL(url)},4000);
+      $("vst").textContent="Downloaded.";
+    });
+  };
+})();
+</script>
 </body>
 </html>
-
-
