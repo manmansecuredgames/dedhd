@@ -58,6 +58,17 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
 .tb{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
 .tb button{display:flex;gap:8px;align-items:center;justify-content:center;background:var(--card);color:var(--text);border:1px solid var(--line)}
 .tb button img{width:18px;height:18px}
+#media{max-width:1000px}
+#mwin{position:relative;width:100%;height:70vh;min-width:240px;min-height:200px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;z-index:5}
+#mbar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 10px;border-bottom:1px solid var(--line);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+#mbar .row{gap:6px}
+#mbar button{padding:6px 10px;font-size:.85rem}
+#mfr{flex:1;width:100%;border:0;background:#fff;min-height:0}
+#mwin.busy #mfr{pointer-events:none}
+#mrs{position:absolute;right:0;bottom:0;width:28px;height:28px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,var(--acc) 50%)}
+#mwin.full{position:fixed;inset:0;width:100%!important;height:100%!important;transform:none!important;border-radius:0;z-index:95;padding-top:calc(48px + env(safe-area-inset-top,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+#mwin.full #mrs,#mwin:fullscreen #mrs{display:none}
+#mwin:fullscreen{width:100%!important;height:100%!important;transform:none!important;border-radius:0}
 </style>
 </head>
 <body>
@@ -178,6 +189,16 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
     </div>
   </section>
 
+  <section id="media" class="pg hide">
+    <h1>Media</h1>
+    <div id="mwin">
+      <div id="mbar"><b>Movie links</b><div class="row"><button id="mop" class="g">Open in about:blank</button><button id="mcp" class="g">Copy link</button><button id="mfs" class="g">Fullscreen</button><button id="mrt" class="g">Reset</button></div></div>
+      <iframe id="mfr" title="Media document" allow="fullscreen" allowfullscreen></iframe>
+      <div id="mrs" aria-label="Resize"></div>
+    </div>
+    <p class="note">Drag the top bar to move it and the corner to resize it. If the document stays blank, it needs to be shared as "anyone with the link can view".</p>
+  </section>
+
   <div id="bn">kamarion - new album out now</div>
 </div>
 
@@ -233,6 +254,7 @@ Gemini | Gemini | https://howdyne.lovable.app/
 School | Type 1111 | https://blooket.uk/
 School | Surf net | https://surfd.net
 School | Froggie arcade | https://trinitypreschoolmp.org
+School | Movie links  | https://docs.google.com/document/d/15vlrgUvy3LPyaVCr-_3JcxogJvTGcHos4j6R-9d-eOc/edit?usp=drivesdk
 Troll | Troll Blook | https://blooketbot.schoolcheats.net
 `;
 /* ===================================================== */
@@ -709,6 +731,72 @@ if(embedded())showSite();
       $("vst").textContent="Downloaded.";
     });
   };
+})();
+</script>
+<script>
+/* ADDED: Media page - embedded doc you can move, resize and fullscreen */
+(function(){
+  var DOC="https://docs.google.com/document/d/15vlrgUvy3LPyaVCr-_3JcxogJvTGcHos4j6R-9d-eOc/edit?usp=drivesdk";
+  var EMB="https://docs.google.com/document/d/15vlrgUvy3LPyaVCr-_3JcxogJvTGcHos4j6R-9d-eOc/preview";
+  var nb=document.createElement("button");nb.dataset.p="media";nb.textContent="Media";
+  $("nav").insertBefore(nb,$("nav").querySelector('[data-p="vault"]'));
+  var win=$("mwin"),fr=$("mfr"),bar=$("mbar"),loaded=false,tx=0,ty=0;
+
+  var prev=go;
+  go=function(p){
+    prev(p);
+    $("media").classList.toggle("hide",p!=="media");
+    if(p==="media"){if(!loaded){fr.src=EMB;loaded=true}}
+    else{
+      win.classList.remove("full");$("mfs").textContent="Fullscreen";
+      try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}
+    }
+  };
+
+  /* move */
+  var drag=null;
+  bar.addEventListener("pointerdown",function(e){
+    if(e.target.closest("button")||win.classList.contains("full")||document.fullscreenElement)return;
+    drag={x:e.clientX-tx,y:e.clientY-ty};bar.setPointerCapture(e.pointerId);win.classList.add("busy");
+  });
+  bar.addEventListener("pointermove",function(e){
+    if(!drag)return;tx=e.clientX-drag.x;ty=e.clientY-drag.y;
+    win.style.transform="translate("+tx+"px,"+ty+"px)";
+  });
+  function endDrag(){drag=null;win.classList.remove("busy")}
+  bar.addEventListener("pointerup",endDrag);bar.addEventListener("pointercancel",endDrag);
+
+  /* resize */
+  var hd=$("mrs"),rs=null;
+  hd.addEventListener("pointerdown",function(e){
+    var r=win.getBoundingClientRect();
+    rs={x:e.clientX,y:e.clientY,w:r.width,h:r.height};hd.setPointerCapture(e.pointerId);win.classList.add("busy");e.preventDefault();
+  });
+  hd.addEventListener("pointermove",function(e){
+    if(!rs)return;
+    win.style.width=Math.max(240,rs.w+e.clientX-rs.x)+"px";
+    win.style.height=Math.max(200,rs.h+e.clientY-rs.y)+"px";
+  });
+  function endRs(){rs=null;win.classList.remove("busy")}
+  hd.addEventListener("pointerup",endRs);hd.addEventListener("pointercancel",endRs);
+
+  /* fullscreen: real fullscreen when the browser allows it, otherwise fill the screen */
+  function css(){win.classList.add("full");$("mfs").textContent="Exit fullscreen"}
+  $("mfs").onclick=function(){
+    if(document.fullscreenElement===win){document.exitFullscreen();return}
+    if(win.classList.contains("full")){win.classList.remove("full");$("mfs").textContent="Fullscreen";return}
+    var rq=win.requestFullscreen||win.webkitRequestFullscreen;
+    if(rq){try{var pr=rq.call(win);if(pr&&pr.catch)pr.catch(css);return}catch(e){}}
+    css();
+  };
+  document.addEventListener("fullscreenchange",function(){
+    $("mfs").textContent=document.fullscreenElement===win||win.classList.contains("full")?"Exit fullscreen":"Fullscreen";
+  });
+
+  /* reset, open in about:blank, copy link */
+  $("mrt").onclick=function(){win.style.width="";win.style.height="";win.style.transform="";tx=0;ty=0;win.classList.remove("full");$("mfs").textContent="Fullscreen"};
+  $("mop").onclick=function(){openAny(EMB)};
+  $("mcp").onclick=function(e){copyText(DOC,e.target)};
 })();
 </script>
 </body>
