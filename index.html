@@ -270,9 +270,23 @@ function embedded(){
 }
 
 /* gate */
+/* code 2: about:blank holds the page's HTML itself (no iframe), then the original tab moves on */
+function openHtml(){
+  var w=window.open("about:blank","_blank");
+  if(!w){showSite();return}
+  fetch(SELF,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()})
+    .catch(function(){return "<!DOCTYPE html>\n"+document.documentElement.outerHTML})
+    .then(function(t){
+      var i=t.lastIndexOf("</body>"),tag="<scr"+"ipt>showSite()</scr"+"ipt>";
+      t=i>-1?t.slice(0,i)+tag+t.slice(i):t+tag;
+      w.document.open();w.document.write(t);w.document.close();
+      location.replace(AFTER);
+    });
+}
 function showSite(){unlocked=true;$("gate").classList.add("hide");$("app").classList.remove("hide");pick();toast();applyTab(ls("tabi"))}
 $("f").addEventListener("keydown",function(e){
   if(e.key!=="Enter")return;
+  if(this.value==="2"){this.value="";openHtml();return}
   if(this.value!==CODE){this.value="";return}
   if(openBlank(SELF)){location.replace(AFTER)}else{showSite()}
 });
