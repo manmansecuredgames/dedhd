@@ -74,7 +74,7 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
 <body>
 <div id="eye" role="button" aria-label="Toggle view"><div id="pup"></div></div>
 
-<div id="gate"><input id="f" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Input" autofocus></div>
+<div id="gate"><input id="f" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Input" autofocus></div>
 
 <div id="app" class="hide">
   <nav id="nav">
@@ -171,21 +171,18 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
     <div class="tb" id="tbb"></div>
   </section>
 
-  <!-- ADDED: password-locked page -->
   <section id="vault" class="pg hide">
     <h1>Vault</h1>
-    <div id="vlock" class="card">
-      <div class="row"><input id="vpw" type="password" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password"><button id="vgo">Unlock</button></div>
-      <p class="note hide" id="vmsg"></p>
-    </div>
-    <div id="vopen" class="hide">
-      <div class="card">
-        <p class="note">Downloads this site's HTML, read fresh from the live code every time you tap.</p>
-        <div class="row"><button id="vdl">Download website HTML</button><button id="vcp" class="g">Copy website HTML</button></div>
-        <textarea id="vtx" class="hide" readonly rows="8" style="width:100%;margin-top:8px" aria-label="Website HTML"></textarea>
-        <p class="note" id="vst"></p>
+    <div class="card">
+      <p class="note">Download works for anyone. Copying needs the password.</p>
+      <div class="row"><button id="vdl">Download website HTML</button><button id="vcp" class="g">Copy website HTML</button></div>
+      <div id="vlock" class="row hide" style="margin-top:8px">
+        <input id="vpw" type="password" placeholder="Password to copy" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+        <button id="vgo">Unlock &amp; copy</button>
       </div>
-      <button id="vre" class="g">Lock</button>
+      <p class="note hide" id="vmsg"></p>
+      <textarea id="vtx" class="hide" readonly rows="8" style="width:100%;margin-top:8px" aria-label="Website HTML"></textarea>
+      <p class="note" id="vst"></p>
     </div>
   </section>
 
@@ -218,30 +215,30 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
    ===================================================== */
 var GAMES = `
 # Category | Name | Link
-Shhh | Monkey Mart | https://funnyshooter.bitbucket.io/go/class-829.html
-Shhh | Eaglercraft | https://play.mc.js.cool/1.12beta/
+Creativity | Monkey Mart | https://funnyshooter.bitbucket.io/go/class-829.html
+Creativity | Eaglercraft | https://play.mc.js.cool/1.12beta/
 Game site | #1 | https://s3.amazonaws.com/prageru-server/mathematics.html
 Game site | #2 | https://noterplus-157.firebaseapp.com/
 Game site | #3 | https://originfastly.jsdelivr.net/gh/julianlockibarra-cat/assets/learnmath.svg
 Game site | #3 alt link  | https://s3.amazonaws.com/prageru-server/mathematics.html
-Shhh | Gta 5  | https://gta.deloskiyt.pl
-Shhh | Another Gta 5  | https://playgta5-tau.vercel.app
+GTa | Gta 5  | https://gta.deloskiyt.pl
+GTa | Another Gta 5  | https://playgta5-tau.vercel.app
 Game site | Type 1111 | https://blooket.uk/
-Shhh | Zombies Ops 2 (vel.gg/bolz) | vibeslops.luckeysystems.com
-Shhh | Modern Warfare 2 | vibeslops.luckeysystems.com
-Shhh | Gta 5 another | https://ovz-game-production.up.railway.app
-Shhh | Gta 5 another | https://igameinbrowser.weebly.com
-Shhh | CE Halo | https://mitchellhynes.com/halo
-Shhh | Halo CE Mobile | https://hcemobile.com
+COD | Zombies Ops 2 (vel.gg/bolz) | vibeslops.luckeysystems.com
+COD | Modern Warfare 2 | vibeslops.luckeysystems.com
+GTa | Gta 5 another | https://ovz-game-production.up.railway.app
+GTa | Gta 5 another | https://igameinbrowser.weebly.com
+Halo | CE Halo | https://mitchellhynes.com/halo
+Halo | Halo CE Mobile | https://hcemobile.com
 Shhh | S 6 | https://pes6.optijuegos.net
-Shhh | CE Halo | https://mitchellhynes.com/halo
-Shhh | Vice City | https://joncodeofficial.github.io/gta-vice-city-was
+Halo | CE Halo | https://mitchellhynes.com/halo
+GTa | Vice City | https://joncodeofficial.github.io/gta-vice-city-was
 Shhh | Ake 2 | https://q2.pieter.com
 Shhh | Ake 3 | https://q3.pieter.com
 Shhh | If Life | https://pixelsuft.github.io/hl/
 Shhh | Under-strike/Half-life | https://x8bitrain.github.io/webXash
 Shhh | Dogewars | https://webwars.link
-Shhh | Another minecraft | https://wasmarcade.com/minecraft
+Creativity | Another minecraft | https://wasmarcade.com/minecraft
 `;
 
 var LINKS = `
@@ -263,7 +260,7 @@ Media | Flickermini | https://flicker-mini.pages.dev/
 `;
 /* ===================================================== */
 
-var CODE="1";
+var CODE="1111";
 var SELF=location.href.split("#")[0];      // the site itself opens in the about:blank tab
 var AFTER="https://www.cmsk12.org/";        // where the original tab goes afterward
 var CL="https://myapps.classlink.com/home"; // where pressing 5 sends you
@@ -670,20 +667,22 @@ if(embedded())showSite();
 <!-- ADDED: Vault page (password lock + live HTML download). Nothing above this line was changed except the new <section id="vault"> block. -->
 <script>
 (function(){
-  var HASH="ac4c6fb67219260c2b6fc896c7778ab781b092494fcc526aeab8433808dd760a"; // SHA-256 of the password
+  var HASH="040386c2f86b6473918b83c8bb735de7bf4cbcfdebc1023ddc89b18918765561"; // SHA-256 of the copy password
+  var ok=false;
 
-  /* nav button + hook into the existing go() without editing it */
   var nb=document.createElement("button");nb.dataset.p="vault";nb.textContent="Vault";$("nav").appendChild(nb);
   var origGo=go;
   go=function(p){
     origGo(p);
     $("vault").classList.toggle("hide",p!=="vault");
-    if(p!=="vault")lock();
+    if(p!=="vault")reset();
   };
 
-  function lock(){
-    $("vopen").classList.add("hide");$("vlock").classList.remove("hide");
-    $("vpw").value="";$("vmsg").classList.add("hide");$("vst").textContent="";
+  function reset(){
+    ok=false;
+    $("vlock").classList.add("hide");$("vpw").value="";
+    $("vmsg").classList.add("hide");$("vtx").classList.add("hide");$("vtx").value="";
+    $("vst").textContent="";
   }
   function sha(s){
     return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
@@ -691,26 +690,14 @@ if(embedded())showSite();
     });
   }
   function msg(t){var m=$("vmsg");m.textContent=t;m.classList.remove("hide")}
-  function tryUnlock(){
-    var v=$("vpw").value;if(!v)return;
-    if(!(window.crypto&&crypto.subtle)){msg("Needs a secure (https) connection to check the password.");return}
-    sha(v).then(function(h){
-      $("vpw").value="";
-      if(h===HASH){$("vlock").classList.add("hide");$("vopen").classList.remove("hide");$("vmsg").classList.add("hide")}
-      else msg("Wrong password.");
-    });
-  }
-  $("vgo").onclick=tryUnlock;
-  $("vpw").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock()});
-  $("vre").onclick=lock;
 
-  /* download: reads the page's own source at click time, so it is always the current real code */
   function source(){
     var u=location.href.split("#")[0];
     return fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()})
       .catch(function(){return "<!DOCTYPE html>\n"+document.documentElement.outerHTML});
   }
-  $("vcp").onclick=function(){
+
+  function doCopy(){
     $("vst").textContent="Preparing...";
     source().then(function(t){
       var box=$("vtx");
@@ -719,7 +706,24 @@ if(embedded())showSite();
         navigator.clipboard.writeText(t).then(function(){$("vst").textContent="Copied.";box.classList.add("hide")}).catch(manual);
       }else manual();
     });
+  }
+
+  $("vcp").onclick=function(){
+    if(ok){doCopy();return}
+    $("vlock").classList.remove("hide");$("vpw").focus();
   };
+  function tryUnlock(){
+    var v=$("vpw").value;if(!v)return;
+    if(!(window.crypto&&crypto.subtle)){msg("Needs a secure (https) connection to check the password.");return}
+    sha(v).then(function(h){
+      $("vpw").value="";
+      if(h===HASH){ok=true;$("vlock").classList.add("hide");$("vmsg").classList.add("hide");doCopy()}
+      else msg("Wrong password.");
+    });
+  }
+  $("vgo").onclick=tryUnlock;
+  $("vpw").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock()});
+
   var dlCap=null;
   if(window.claude&&claude.use){claude.use("downloads").then(function(d){dlCap=d}).catch(function(){})}
   $("vdl").onclick=function(){
