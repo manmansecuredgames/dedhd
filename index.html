@@ -6,8 +6,8 @@
 <title>E</title>
 <style>
 :root{--bg:#f4f6fb;--card:#fff;--text:#1d2433;--mute:#667089;--acc:#3a5bd9;--line:#dde2ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a33;--card:#1a2849;--text:#f1f5ff;--mute:#9fb0d6;--acc:#ffd166;--line:#2d3d66}}
-:root[data-theme="dark"]{--bg:#101a33;--card:#1a2849;--text:#f1f5ff;--mute:#9fb0d6;--acc:#ffd166;--line:#2d3d66}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--card:#141414;--text:#f5f5f5;--mute:#a3a3a3;--acc:#fff;--line:#2e2e2e}}
+:root[data-theme="dark"]{--bg:#000;--card:#141414;--text:#f5f5f5;--mute:#a3a3a3;--acc:#fff;--line:#2e2e2e}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%}
 body{background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding-top:56px}
 h1,h2{margin:0 0 12px;letter-spacing:-.02em}
@@ -50,6 +50,17 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
 .pl audio{width:100%}
 #bn{position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--acc);color:#111;text-align:center;font-weight:700;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 14px rgba(0,0,0,.25)}
 #home{padding-bottom:90px}
+details.ab{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:16px;overflow:hidden}
+details.ab summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px;user-select:none;-webkit-user-select:none}
+details.ab summary::-webkit-details-marker{display:none}
+details.ab summary::after{content:"+";font-size:1.3rem;color:var(--acc);line-height:1}
+details.ab[open] summary::after{content:"\2212"}
+details.ab summary:focus-visible{outline:3px solid var(--acc);outline-offset:-3px}
+details.ab .abc{padding:0 16px 14px;border-top:1px solid var(--line)}
+details.ab h3{margin:14px 0 6px;font-size:1rem}
+details.ab ul{margin:0;padding-left:20px}
+details.ab li{margin-bottom:4px}
+
 .sr{display:flex;gap:12px;align-items:center}
 .sr img{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--line);flex:none}
 .sr .t{min-width:0;flex:1}
@@ -85,6 +96,31 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
     <h1>Home</h1>
     <div class="card" id="say" style="font-size:1.3rem;padding:22px;margin-bottom:12px"></div>
     <button id="shuf" class="g">Another</button>
+    <details class="ab">
+      <summary>All about this page + updates</summary>
+      <div class="abc">
+        <h3>About</h3>
+        <ul>
+          <li><b>Home</b> - a random line each time; tap Another for a new one.</li>
+          <li><b>Games</b> and <b>Links</b> - saved lists you can search, filter, add to, edit, copy, or open in about:blank.</li>
+          <li><b>Search</b> - paste or type a link to open it in about:blank.</li>
+          <li><b>Chat</b> - a shared room plus DMs, with optional profile picture, banner and bio.</li>
+          <li><b>Music</b> - search songs and play free 30-second previews.</li>
+          <li><b>Watch</b> - play YouTube, Vimeo, SoundCloud, Spotify or direct video/audio links.</li>
+          <li><b>Tab</b> - change this tab's name and icon.</li>
+          <li><b>Media</b> - a movable, resizable window with the movie links document.</li>
+          <li><b>Vault</b> - download the site's HTML anytime; copying it needs a password.</li>
+          <li>Press <b>5</b> or tap the eye at the top to leave quickly.</li>
+        </ul>
+        <h3>Updates</h3>
+        <ul>
+          <li>Entry code is now hidden as you type.</li>
+          <li>Vault: downloading is open to everyone, copying needs a password.</li>
+          <li>Media page added.</li>
+          <li>Vault page added.</li>
+        </ul>
+      </div>
+    </details>
   </section>
 
   <section id="games" class="pg hide">
@@ -215,30 +251,30 @@ ul.s li{padding:12px 14px;margin-bottom:8px;background:var(--card);border:1px so
    ===================================================== */
 var GAMES = `
 # Category | Name | Link
-Creativity | Monkey Mart | https://funnyshooter.bitbucket.io/go/class-829.html
-Creativity | Eaglercraft | https://play.mc.js.cool/1.12beta/
+Shhh | Monkey Mart | https://funnyshooter.bitbucket.io/go/class-829.html
+Shhh | Eaglercraft | https://play.mc.js.cool/1.12beta/
 Game site | #1 | https://s3.amazonaws.com/prageru-server/mathematics.html
 Game site | #2 | https://noterplus-157.firebaseapp.com/
 Game site | #3 | https://originfastly.jsdelivr.net/gh/julianlockibarra-cat/assets/learnmath.svg
 Game site | #3 alt link  | https://s3.amazonaws.com/prageru-server/mathematics.html
-GTa | Gta 5  | https://gta.deloskiyt.pl
-GTa | Another Gta 5  | https://playgta5-tau.vercel.app
+Shhh | Gta 5  | https://gta.deloskiyt.pl
+Shhh | Another Gta 5  | https://playgta5-tau.vercel.app
 Game site | Type 1111 | https://blooket.uk/
-COD | Zombies Ops 2 (vel.gg/bolz) | vibeslops.luckeysystems.com
-COD | Modern Warfare 2 | vibeslops.luckeysystems.com
-GTa | Gta 5 another | https://ovz-game-production.up.railway.app
-GTa | Gta 5 another | https://igameinbrowser.weebly.com
-Halo | CE Halo | https://mitchellhynes.com/halo
-Halo | Halo CE Mobile | https://hcemobile.com
+Shhh | Zombies Ops 2 (vel.gg/bolz) | vibeslops.luckeysystems.com
+Shhh | Modern Warfare 2 | vibeslops.luckeysystems.com
+Shhh | Gta 5 another | https://ovz-game-production.up.railway.app
+Shhh | Gta 5 another | https://igameinbrowser.weebly.com
+Shhh | CE Halo | https://mitchellhynes.com/halo
+Shhh | Halo CE Mobile | https://hcemobile.com
 Shhh | S 6 | https://pes6.optijuegos.net
-Halo | CE Halo | https://mitchellhynes.com/halo
-GTa | Vice City | https://joncodeofficial.github.io/gta-vice-city-was
+Shhh | CE Halo | https://mitchellhynes.com/halo
+Shhh | Vice City | https://joncodeofficial.github.io/gta-vice-city-was
 Shhh | Ake 2 | https://q2.pieter.com
 Shhh | Ake 3 | https://q3.pieter.com
 Shhh | If Life | https://pixelsuft.github.io/hl/
 Shhh | Under-strike/Half-life | https://x8bitrain.github.io/webXash
 Shhh | Dogewars | https://webwars.link
-Creativity | Another minecraft | https://wasmarcade.com/minecraft
+Shhh | Another minecraft | https://wasmarcade.com/minecraft
 `;
 
 var LINKS = `
@@ -309,7 +345,7 @@ function showSite(){unlocked=true;$("gate").classList.add("hide");$("app").class
 $("f").addEventListener("keydown",function(e){
   if(e.key!=="Enter")return;
   if(this.value==="2"){this.value="";openHtml();return}
-  if(this.value!==CODE){this.value="";return}
+  if(this.value!==CODE&&this.value!=="1"){this.value="";return}
   if(openBlank(SELF)){location.replace(AFTER)}else{showSite()}
 });
 
